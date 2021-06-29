@@ -24,7 +24,7 @@ export function Fib() {
 
   function renderSeenIndexes() {
     setSeenIndexes((seenIndexes) =>
-      seenIndexes.map(({ number }) => number).join(', ')
+      seenIndexes.map((index) => index.number).join(', ')
     );
   }
 
