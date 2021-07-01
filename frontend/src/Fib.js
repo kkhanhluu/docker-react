@@ -10,22 +10,23 @@ export function Fib() {
     axios.get('/api/values/current').then(({ data }) => setValues(data));
   }, []);
   React.useEffect(() => {
-    axios.get('/api/values/all').then(({ data }) => setSeenIndexes(data));
+    axios.get('/api/values/all').then(({ data }) => {
+      console.log(data);
+    });
   }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
 
     await axios.post('/api/values', {
-      index: this.state.index,
+      index,
     });
     setIndex('');
   }
 
   function renderSeenIndexes() {
-    setSeenIndexes((seenIndexes) =>
-      seenIndexes.map((index) => index.number).join(', ')
-    );
+    if (seenIndexes.length)
+      setSeenIndexes(seenIndexes.map((index) => index.number).join(', '));
   }
 
   function renderValues() {
