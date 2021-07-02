@@ -7,11 +7,13 @@ export function Fib() {
   const [index, setIndex] = React.useState('');
 
   React.useEffect(() => {
-    axios.get('/api/values/current').then(({ data }) => setValues(data));
+    axios.get('/api/values/current').then(({ data }) => {
+      setValues(data);
+    });
   }, []);
   React.useEffect(() => {
     axios.get('/api/values/all').then(({ data }) => {
-      console.log(data);
+      setSeenIndexes(data);
     });
   }, []);
 
@@ -25,8 +27,7 @@ export function Fib() {
   }
 
   function renderSeenIndexes() {
-    if (seenIndexes.length)
-      setSeenIndexes(seenIndexes.map((index) => index.number).join(', '));
+    return seenIndexes.map((index) => index.number).join(', ');
   }
 
   function renderValues() {
