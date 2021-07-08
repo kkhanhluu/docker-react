@@ -29,7 +29,7 @@ jobs:
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}/nginx
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}-nginx
           image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-nginx:latest
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
@@ -50,7 +50,7 @@ jobs:
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}/frontend
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}-frontend
           image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-frontend:latest
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
@@ -71,7 +71,7 @@ jobs:
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}/server
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}-server
           image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-server:latest
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
@@ -92,7 +92,7 @@ jobs:
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}/worker
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}-worker
           image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-worker:latest
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
