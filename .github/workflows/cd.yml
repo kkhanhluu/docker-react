@@ -1,7 +1,7 @@
 name: Auto deployment
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build-and-deploy:
