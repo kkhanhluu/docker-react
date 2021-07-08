@@ -16,24 +16,86 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: 'Build and push image'
+      - name: 'Build and push nginx image'
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker:latest
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker:latest
-
-      - name: 'Deploy to Azure Container Instances'
+          docker build ./nginx -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-nginx:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-nginx:latest
+      - name: 'Deploy nginx image to Azure Container Instances'
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker:latest
+          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-nginx:latest
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          name: react-docker
+          name: react-docker-nginx
+          location: 'Germany West Central'
+
+      - name: 'Build and push frontend image'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker build ./frontend -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-frontend:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-frontend:latest
+      - name: 'Deploy frontend image to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-frontend:latest
+          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          name: react-docker-frontend
+          location: 'Germany West Central'
+
+      - name: 'Build and push server image'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker build ./server -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-server:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-server:latest
+      - name: 'Deploy server image to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-server:latest
+          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          name: react-docker-server
+          location: 'Germany West Central'
+
+      - name: 'Build and push worker image'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker build ./worker -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-worker:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-worker:latest
+      - name: 'Deploy worker image to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/react-docker-worker:latest
+          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          name: react-docker-worker
           location: 'Germany West Central'
