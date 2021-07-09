@@ -1,6 +1,14 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Multi-container app built with React, Node.js, Nginx, Redis, Postgres and Azure.
+
+## Application architecture
+
+![image][https://ibb.co/wsbtslq]
+
+### CI/CD
+
+Docker containers are built and pushed to Azure Container Registry. App service use these container to run the app.
 
 ## Available Scripts
 
