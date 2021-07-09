@@ -1,0 +1,39 @@
+version: '3'
+services:
+  postgres:
+    image: 'khanhreactdocker.azurecr.io/samples/postgres'
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+  redis:
+    image: 'khanhreactdocker.azurecr.io/samples/redis'
+  nginx:
+    image: 'khanhreactdocker.azurecr.io/react-docker-nginx'
+    depends_on:
+      - api
+      - client
+    restart: always
+    ports:
+      - '3050:80'
+  api:
+    image: 'khanhreactdocker.azurecr.io/react-docker-server'
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    image: 'khanhreactdocker.azurecr.io/react-docker-frontend'
+  worker:
+    image: 'khanhreactdocker.azurecr.io/react-docker-worker'
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
