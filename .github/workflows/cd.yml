@@ -24,40 +24,40 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract metadata (tags, labels) for frontend image
-        id: meta-frontend
+        id: metaFrontend
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: kkhanhluu/docker-react-frontend
-      - name: Build and push Docker image
+      - name: Build and push frontend Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./frontend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.metaFrontend.outputs.tags }}
+          labels: ${{ steps.metaFrontend.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for backend image
-        id: meta-server
+        id: metaServer
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: kkhanhluu/docker-react-server
-      - name: Build and push Docker image
+      - name: Build and push backend Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./server
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.metaServer.outputs.tags }}
+          labels: ${{ steps.metaServer.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for worker image
-        id: meta-worker
+        id: metaWorker
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: kkhanhluu/docker-react-worker
-      - name: Build and push Docker image
+      - name: Build and push worker Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./worker
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.metaWorker.outputs.tags }}
+          labels: ${{ steps.metaWorker.outputs.labels }}
