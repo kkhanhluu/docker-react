@@ -4,7 +4,7 @@ Multi-container app built with React, Node.js, Nginx, Redis, Postgres and Azure.
 
 ## Application architecture
 
-![image][https://ibb.co/wsbtslq]
+![image](https://i.ibb.co/ySdD6Rk/Screen-Shot-2021-07-09-at-19-25-31.png)
 
 ### CI/CD
 
