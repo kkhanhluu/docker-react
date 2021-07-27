@@ -41,7 +41,7 @@
 ## App service setup
 
 - Create a new app service, choose docker container as publishment
-- Choose `Azure container registry` as registry source, turn on continuous deployement
+- Choose `Azure container registry` as registry source, turn on continuous deployment
 - Fill out credentials in `Settings -> Configuration`
 
 ### Troubleshooting
